@@ -30,7 +30,6 @@ open class FredKitTabBarSplitView: UITabBarController {
         self.tabBar.addSubview(sideBarContainerView)
         
         
-        
         sideBarCollectionView.tabBarItems = tabBar.items!
         sideBarCollectionView.delegate = self
         sideBarContainerView.isHidden = true
@@ -62,7 +61,9 @@ open class FredKitTabBarSplitView: UITabBarController {
             self.tabBar.subviews.forEach { view in
                 let tabBarButtonClass = NSClassFromString("UITabBarButton")!
                 if view.isKind(of: tabBarButtonClass) {
-                    view.isHidden = false
+                    if view.subviews.count == 2 {
+                        view.isHidden = false
+                    }
                 }
             }
             
