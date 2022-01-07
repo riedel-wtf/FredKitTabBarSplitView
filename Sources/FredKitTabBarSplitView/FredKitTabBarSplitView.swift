@@ -9,7 +9,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class FredKitTabBarSplitView: UITabBarController {
+public class FredKitTabBarSplitView: UITabBarController {
 
     let sideBarCollectionView = SidebarCollectionViewController(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .sidebar)))
     var sideBarContainerView: UIView!
