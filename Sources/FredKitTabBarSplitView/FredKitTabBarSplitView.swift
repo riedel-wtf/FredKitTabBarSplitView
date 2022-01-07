@@ -15,9 +15,12 @@ open class FredKitTabBarSplitView: UITabBarController {
     var sideBarContainerView: UIView!
     var sideBarMavigationController: UINavigationController!
     
+    let internalTabBarController = UITabBarController()
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
     
+        self.addChild(internalTabBarController)
         
         sideBarMavigationController = UINavigationController(rootViewController: sideBarCollectionView)
         sideBarMavigationController.navigationBar.prefersLargeTitles = true
@@ -33,6 +36,7 @@ open class FredKitTabBarSplitView: UITabBarController {
         sideBarContainerView.isHidden = true
         sideBarContainerView.backgroundColor = .secondarySystemBackground
         
+        
         self.refreshUI()
         // Do any additional setup after loading the view.
     }
@@ -43,7 +47,14 @@ open class FredKitTabBarSplitView: UITabBarController {
     
     func refreshUI() {
         if self.traitCollection.horizontalSizeClass == .compact {
-            self.tabBar.frame = CGRect(x: 0, y: self.view.frame.height - 66, width: self.view.frame.width, height: 66)
+            
+            let bottomSafeArea = self.view.safeAreaInsets.bottom
+            if self.traitCollection.verticalSizeClass == .compact {
+                self.tabBar.frame = CGRect(x: 0, y: self.view.frame.height - (32 + bottomSafeArea), width: self.view.frame.width, height: 32 + bottomSafeArea)
+            } else {
+                self.tabBar.frame = CGRect(x: 0, y: self.view.frame.height - (49 + bottomSafeArea), width: self.view.frame.width, height: 49 + bottomSafeArea)
+            }
+            
             self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             
             sideBarContainerView.isHidden = true
