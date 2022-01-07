@@ -1,0 +1,97 @@
+//
+//  FredKitTabBarController.swift
+//  UITabBarSplitView Test App
+//
+//  Created by Frederik Riedel on 06.01.22.
+//
+
+#if os(iOS)
+import UIKit
+
+@available(iOS 14.0, *)
+class FredKitTabBarSplitView: UITabBarController {
+
+    let sideBarCollectionView = SidebarCollectionViewController(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .sidebar)))
+    var sideBarContainerView: UIView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        self.sideBarContainerView = sideBarCollectionView.view!
+        
+        
+        
+        self.tabBar.addSubview(sideBarContainerView)
+        
+        sideBarCollectionView.tabBarItems = tabBar.items!
+        sideBarCollectionView.delegate = self
+        sideBarContainerView.isHidden = true
+        sideBarContainerView.backgroundColor = .secondarySystemBackground
+        
+        self.refreshUI()
+        // Do any additional setup after loading the view.
+    }
+    
+    func refreshUI() {
+        if self.traitCollection.horizontalSizeClass == .compact {
+            self.tabBar.frame = CGRect(x: 0, y: self.view.frame.height - 66, width: self.view.frame.width, height: 66)
+            self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
+            sideBarContainerView.isHidden = true
+            
+            self.tabBar.subviews.forEach { view in
+                let tabBarButtonClass = NSClassFromString("UITabBarButton")!
+                if view.isKind(of: tabBarButtonClass) {
+                    view.isHidden = false
+                }
+            }
+            
+        } else {
+            self.tabBar.frame = CGRect(x: 0, y: 0, width: 300, height: self.view.frame.height)
+            
+            sideBarContainerView.frame = self.tabBar.bounds
+            sideBarContainerView.isHidden = false
+            
+            
+            self.tabBar.subviews.forEach { view in
+                let tabBarButtonClass = NSClassFromString("UITabBarButton")!
+                if view.isKind(of: tabBarButtonClass) {
+                    view.isHidden = true
+                }
+            }
+            
+            self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 300, bottom: 0, right: 0)
+        }
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.refreshUI()
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if let index = tabBar.items?.firstIndex(of: item) {
+            sideBarCollectionView.selectedIndex = index
+        }
+    }
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
+
+@available(iOS 14.0, *)
+extension FredKitTabBarSplitView: SidebarCollectionViewControllerDelegate {
+    func didChangeSideBar(index: Int) {
+        self.selectedIndex = index
+    }
+}
+#endif
