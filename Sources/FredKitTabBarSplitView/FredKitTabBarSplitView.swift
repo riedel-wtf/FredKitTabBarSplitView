@@ -9,12 +9,12 @@
 import UIKit
 
 @available(iOS 14.0, *)
-public class FredKitTabBarSplitView: UITabBarController {
+open class FredKitTabBarSplitView: UITabBarController {
 
     let sideBarCollectionView = SidebarCollectionViewController(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .sidebar)))
     var sideBarContainerView: UIView!
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
     
         self.sideBarContainerView = sideBarCollectionView.view!
@@ -65,12 +65,12 @@ public class FredKitTabBarSplitView: UITabBarController {
     }
     
     
-    override func viewDidLayoutSubviews() {
+    open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.refreshUI()
     }
     
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    open override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if let index = tabBar.items?.firstIndex(of: item) {
             sideBarCollectionView.selectedIndex = index
         }
