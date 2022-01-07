@@ -15,12 +15,8 @@ open class FredKitTabBarSplitView: UITabBarController {
     var sideBarContainerView: UIView!
     var sideBarMavigationController: UINavigationController!
     
-    let internalTabBarController = UITabBarController()
-    
     open override func viewDidLoad() {
         super.viewDidLoad()
-    
-        self.addChild(internalTabBarController)
         
         sideBarMavigationController = UINavigationController(rootViewController: sideBarCollectionView)
         sideBarMavigationController.navigationBar.prefersLargeTitles = true
@@ -45,6 +41,7 @@ open class FredKitTabBarSplitView: UITabBarController {
     
     
     func refreshUI() {
+        
         if self.traitCollection.horizontalSizeClass == .compact {
             
             let bottomSafeArea = self.view.safeAreaInsets.bottom
@@ -61,9 +58,7 @@ open class FredKitTabBarSplitView: UITabBarController {
             self.tabBar.subviews.forEach { view in
                 let tabBarButtonClass = NSClassFromString("UITabBarButton")!
                 if view.isKind(of: tabBarButtonClass) {
-                    if view.subviews.count == 2 {
-                        view.isHidden = false
-                    }
+                    view.isHidden = false
                 }
             }
             
