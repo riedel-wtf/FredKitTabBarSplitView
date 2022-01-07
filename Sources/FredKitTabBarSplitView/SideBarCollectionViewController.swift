@@ -38,15 +38,41 @@ class SidebarCollectionViewController: UICollectionViewController {
         
         // Register cell classes
         
+        let dictionary = Bundle.main.infoDictionary!
+        let appName = dictionary["CFBundleName"] as! String
+        self.title = appName
+        
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.reloadData()
-        self.collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
+        
+        
+        
+//        self.collectionView.contentInset = UIEdgeInsets(top: self.navigationController!.navigationBar.frame.height, left: 0, bottom: 0, right: 0)
         self.view.backgroundColor = UIColor.systemBackground
-        // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.isHidden = false
+        
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: self, action: #selector(openMenu))
+//
+//
+//        self.toolbarItems = [
+//            UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(openSettings)),
+//            UIBarButtonItem.flexibleSpace(),
+//            UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(openSettings))
+//        ]
+//
+//        self.navigationController?.isToolbarHidden = false
+        
+        
     }
     
-
+    @objc func openMenu() {
+        
+    }
+    
+    @objc func openSettings() {
+        
+    }
     
     // MARK: UICollectionViewDataSource
     

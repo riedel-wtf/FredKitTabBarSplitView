@@ -13,15 +13,20 @@ open class FredKitTabBarSplitView: UITabBarController {
 
     let sideBarCollectionView = SidebarCollectionViewController(collectionViewLayout: UICollectionViewCompositionalLayout.list(using: UICollectionLayoutListConfiguration(appearance: .sidebar)))
     var sideBarContainerView: UIView!
+    var sideBarMavigationController: UINavigationController!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.sideBarContainerView = sideBarCollectionView.view!
         
+        sideBarMavigationController = UINavigationController(rootViewController: sideBarCollectionView)
+        sideBarMavigationController.navigationBar.prefersLargeTitles = true
         
+        self.sideBarContainerView = sideBarMavigationController.view
         
         self.tabBar.addSubview(sideBarContainerView)
+        
+        
         
         sideBarCollectionView.tabBarItems = tabBar.items!
         sideBarCollectionView.delegate = self
@@ -31,6 +36,10 @@ open class FredKitTabBarSplitView: UITabBarController {
         self.refreshUI()
         // Do any additional setup after loading the view.
     }
+    
+
+    
+    
     
     func refreshUI() {
         if self.traitCollection.horizontalSizeClass == .compact {
