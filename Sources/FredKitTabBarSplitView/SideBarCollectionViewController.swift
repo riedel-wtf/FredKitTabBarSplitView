@@ -27,7 +27,6 @@ class SidebarCollectionViewController: UICollectionViewController {
     var tabBarItems = [UITabBarItem]() {
         didSet {
             self.collectionView.reloadData()
-            self.selectedIndex = 0
         }
     }
     
@@ -39,13 +38,11 @@ class SidebarCollectionViewController: UICollectionViewController {
         
         // Register cell classes
         
-        
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.reloadData()
         self.collectionView.contentInset = UIEdgeInsets(top: 44, left: 0, bottom: 0, right: 0)
         self.view.backgroundColor = UIColor.systemBackground
-        
         // Do any additional setup after loading the view.
     }
     
@@ -83,6 +80,11 @@ class SidebarCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.delegate?.didChangeSideBar(index: indexPath.row)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.selectedIndex = 0
     }
     
 }
