@@ -76,7 +76,12 @@ open class FredKitTabBarSplitView: UITabBarController {
                 }
             }
             
-            self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 300, bottom: 0, right: 0)
+            var additionalInsetLeftRight: CGFloat = 0
+            if self.view.frame.width > 1024 {
+                additionalInsetLeftRight = 150
+            }
+            
+            self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 300 + additionalInsetLeftRight, bottom: 0, right: 0 + additionalInsetLeftRight)
         }
     }
     
